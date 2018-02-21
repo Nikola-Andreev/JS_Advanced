@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Generator</title>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"
+            integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="wrapper">
+
+</div>
+<script>
+    window.onload = function () {
+        createBook("#wrapper", "Alice in Wonderland", "Lewis Carroll", 1111);
+        createBook("#wrapper", "Alice in Wonderlsdsdand", "Lewis Carroll", 1111);
+    }
+</script>
+</body>
+<script>
+
+    (function createBook() {
+
+        let counter = 1
+        return function (selector, titleName, authorName, isbn) {
+
+
+            let father = $(`${selector}`)
+
+            let div = $('<div>')
+            div.attr('id', 'book' + counter)
+            counter++
+            let name = $('<p>')
+            name.text(titleName)
+            name.attr('class', 'title')
+
+            let author = $('<p>')
+            author.text(authorName)
+            author.attr('class', 'author')
+
+            let isbNum = $('<p>')
+            isbNum.text(isbn)
+            isbNum.attr('class', 'isbn')
+
+            let select = $('<button>')
+            select.text('Select')
+            select.on('click', () => {
+                div.css('border', '2px solid blue')
+            })
+
+            let deselect = $('<button>')
+            deselect.text('Deselect')
+            deselect.on('click', () => {
+                div.css('border', 'none')
+            })
+
+            div.append(name)
+            div.append(author)
+            div.append(isbNum)
+            div.append(select)
+            div.append(deselect)
+            father.append(div)
+
+        }
+    }())
+</script>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"
+            integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="wrapper">
+    <div id="content">
+        <p><strong>The Theodor Pallady Museum </strong>is a museum situated in one of the oldest surviving merchant houses in Bucharest, Romania. It <strong>includes many works by the </strong>well-known Romanian <strong>painter Theodor Pallady</strong>, as well as a number of European and Oriental furniture pieces.</p>
+    </div>
+    <input type="button" id="generate" value="Generate Summary"/>
+</div>
+
+
+</body>
+<script>
+    $(document).ready(function solve(selector) {
+        $(selector).on('click', function () {
+            let text = $('#content')
+            let result = text.find('strong').text()
+            let parent = $('#content')
+            let div = $('<div id="summary"></div>')
+            let p = $('<p></p>').text(result)
+            let h2 = $('<h2>').text('Summary')
+
+            div.append(h2)
+            div.append(p)
+            parent.append(div)
+        })
+    })
+</script>
+
+</html>

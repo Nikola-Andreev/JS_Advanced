@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cards</title>
+    <style>
+        div.card {
+            display: inline-block; padding: 10px; margin: 10px;
+            width: 50px; height: 80px; background: #EEE;
+            border: 3px solid #DDD; border-radius: 5px;
+            font-size: 18pt; text-align: center; line-height: 75px;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+</head>
+<body>
+<div id="main"></div>
+<script>
+    function cardDeckBuilder(selector) {
+
+        let suits = {'C':'\u2663', 'D':'\u2666', 'H':'\u2665', 'S':'\u2660'}
+
+        let add = {
+            addCard: function (face, suit) {
+                if (validateFace(face) && validateSuit(suit)) {
+                    let card = $(`<div class="card">${face} ${suits[suit]}</div>`).on('click',function () {
+                        el = $(selector);
+                        el.children().each(function(i,div){el.prepend(div)})
+                    })
+                    $(selector).append(card)
+                }
+            }
+        }
+
+        return  add
+
+        function validateFace(face) {
+            let faces = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
+            if(faces.indexOf(face) !== -1){
+                return true
+            } else {
+                return false
+            }
+        }
+
+        function validateSuit(suit) {
+            let suits = {'C':'\u2663', 'D':'\u2666', 'H':'\u2665', 'S':'\u2660'}
+            if (suit in suits) {
+                return true
+            } else {
+                return false
+            }
+    }
+</script>
+<script>
+    $(function() {
+        let builder = cardDeckBuilder("#main");
+        builder.addCard("10", "D");
+        builder.addCard("K", "S");
+        builder.addCard("Q", "H");
+        builder.addCard("4", "C");
+    });
+</script>
+</body>
+</html>
+
+

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Increment Counter</title>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"
+            integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="wrapper">
+</div>
+<script>
+    window.onload = function(){
+        increment("#wrapper");
+    }
+</script>
+
+<script>
+    function increment(selector) {
+        let mainField = $(selector)
+        let textArea = $('<textarea></textarea>')
+        textArea.val(0)
+        textArea.attr('disabled',true)
+        textArea.addClass('counter')
+        let button = $('<button>Increment</button>')
+        button.attr('id','incrementBtn')
+        button.addClass('btn')
+        let addButton = $('<button>Add</button>')
+        addButton.attr('id','addBtn')
+        addButton.addClass('btn')
+        let ul = $('<ul class="results"></ul>')
+
+        button.on('click' , ()=>{
+            let value = Number(textArea.val())
+            textArea.val(++value)
+        })
+
+        addButton.on('click' , ()=>{
+            let li = $('<li>')
+            li.text(textArea.val())
+            ul.append(li)
+        })
+
+        mainField.append(textArea)
+        mainField.append(button)
+        mainField.append(addButton)
+        mainField.append(ul)
+    }
+</script>
+</body>
+</html>

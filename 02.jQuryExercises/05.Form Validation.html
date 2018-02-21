@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Form Validation</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"
+            integrity="sha256-cCueBR6CsyA4/9szpPfrX3s49M9vUU5BgtiJj06wt/s="
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div id="wrapper">
+    <form id="registerForm">
+        <fieldset id="userInfo">
+            <legend>User Information:</legend>
+            <div class="pairContainer">
+                <label for="username">Userame:</label>
+                <input id="username" type="text">
+            </div>
+            <div class="pairContainer">
+                <label for="email">Email:</label>
+                <input id="email" type="text">
+            </div>
+            <div class="pairContainer">
+                <label for="password">Passwrod:</label>
+                <input id="password" type="password">
+            </div>
+            <div class="pairContainer">
+                <label for="confirm-password">Confirm Password:</label>
+                <input id="confirm-password" type="password">
+            </div>
+            <div class="pairContainer">
+                <label for="company">Is Company?</label>
+                <input id="company" type="checkbox">
+            </div>
+        </fieldset>
+        <fieldset id="companyInfo" style="display: none;">
+            <legend>Company Informaion:</legend>
+            <div class="pairContainer">
+                <label for="companyNumber">Company Number</label>
+                <input id="companyNumber" type="number">
+            </div>
+        </fieldset>
+        <button id="submit">Submit</button>
+    </form>
+    <div id="valid" style="display: none">Valid</div>
+</div>
+<script>
+    window.onload = function(){
+        result();
+    }
+</script>
+</body>
+<script>
+    function result() {
+
+            let company = false
+
+            $('#company').on('change',function() {
+                if( $(this).is(':checked')) {
+                   $('#companyInfo').css('display', 'block')
+                    company=true
+                } else {
+                    $('#companyInfo').css('display', 'none')
+                    company=false
+                }
+            })
+
+            let submit = $('#submit')
+            submit.on('click', function (event) {
+
+                let user =false
+                let pass = false
+                let email = false
+                let comp = false
+
+                let userNameField = $('#username')
+                let userNameValue = userNameField.val()
+                let userNameRegex = /^[a-zA-Z0-9]{3,20}$/
+                let test = userNameRegex.test(userNameValue)
+                if(test){
+                    $(userNameField).css('border','none')
+                    user = true
+                } else{
+                    //$(userNameField).css('border','2px inset')
+                    $(userNameField).css('border-color','red')
+                    user = false
+                }
+
+                let passField = $('#password')
+                let passValue = passField.val()
+                let passRegex = /^[a-zA-Z0-9_]{5,15}$/
+                let test1 = passRegex.test(passValue)
+                let confPassField = $('#confirm-password')
+                let confPassValue = confPassField.val()
+                if(test1 && passValue == confPassValue){
+                    $(passField).css('border','none')
+                    $(confPassField).css('border','none')
+                    pass = true
+                } else{
+                    //$(passField).css('border','2px inset')
+                    $(passField).css('border-color','red')
+                    //$(confPassField).css('border','2px inset')
+                    $(confPassField).css('border-color','red')
+                    pass = false
+                }
+
+                let emailField = $('#email')
+                let emailValue = emailField.val()
+                let emailRegex = /@[\s\S]+?\./
+                let test2 =emailRegex.test(emailValue)
+                if(test2){
+                    $(emailField).css('border','none')
+                    email = true
+                } else{
+                    //$(emailField).css('border','2px inset')
+                    $(emailField).css('border-color','red')
+                    email = false
+                }
+
+                if(company){
+                    let companyField = $('#companyNumber')
+                    let companyValue = Number(companyField.val())
+                    if(companyValue>= 1000 && companyValue <= 9999){
+                        $(companyField).css('border','none')
+                        comp = true
+                    } else{
+                        //$(companyField).css('border','2px inset')
+                        $(companyField).css('border-color','red')
+                        comp = false
+                    }
+                    if(user && pass && email && comp){
+                        $('#valid').css('display','block')
+                    } else{
+                        $('#valid').css('display','none')
+                    }
+                } else{
+                    if(user && pass && email){
+                        $('#valid').css('display','block')
+                    } else{
+                        $('#valid').css('display','none')
+                    }
+                }
+                event.preventDefault()
+            })
+    }
+</script>
+</html>
